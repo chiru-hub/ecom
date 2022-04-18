@@ -1,4 +1,16 @@
-<template></template>
+<template>
+  <tr>
+    <td>
+      <router-link :to="item.product.get_absolute_url">{{
+        item.product.name
+      }}</router-link>
+    </td>
+    <td>${{ item.product.price }}</td>
+    <td>{{ item.quantity }}</td>
+    <td>${{ getItemTotal(item).toFixed(2) }}</td>
+    <td><button class="delete"></button></td>
+  </tr>
+</template>
 <script>
 export default {
   name: "CartItem",
@@ -7,8 +19,17 @@ export default {
   },
   data() {
     return {
-      items: this.initialItem,
+      item: this.initialItem,
     };
+  },
+  methods: {
+    getItemTotal(item) {
+      console.log(item);
+      return item.quantity * item.product.price;
+    },
+  },
+  mounted() {
+    console.log(this.initialItem);
   },
 };
 </script>

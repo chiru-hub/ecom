@@ -16,14 +16,18 @@
             </tr>
           </thead>
           <tbody>
-            <Cartitem
+            <CartItem
               v-for="item in cart.items"
               :key="item.product.id"
-              :intialItem="item"
+              :initialItem="item"
             />
           </tbody>
         </table>
         <p v-else>You don't have any products in your cart...</p>
+      </div>
+      <div class="column is-12 box">
+        <h2 class="subtitle">Summary</h2>
+        <strong></strong>
       </div>
     </div>
   </div>
@@ -42,6 +46,17 @@ export default {
         items: [],
       },
     };
+  },
+  mounted() {
+    this.cart = this.$store.state.cart;
+    console.log(this.cart.items);
+  },
+  computed: {
+    cartTotalLength() {
+      return this.cart.items.reduce((acc, curVal) => {
+        return (acc += curVal.quantity);
+      }, 0);
+    },
   },
 };
 </script>
